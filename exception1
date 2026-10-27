@@ -1,0 +1,152 @@
+package Basic;
+
+import java.util.Scanner;
+
+public class Exception55 {
+	private static String accountHolder = "Salvin";
+	private static double balance = 5000.00;
+	
+	public static void deposit(Scanner sc) {
+		try {
+			System.out.println("Ennter deposit amount :");
+			double amount = Double.parseDouble(sc.nextLine());
+			if(amount<=0) {
+				throw new IllegalArgumentException("Deposit amount should be positive");
+			}
+			balance = balance + amount;
+			
+			System.out.println("Deposit successful !");
+			System.out.println("Deposit amount :" +amount);
+			System.out.println("Updated balance :" + balance);
+		} catch(NumberFormatException e) {
+			System.out.println("Error : enter correct numeric amount");
+		} catch(IllegalArgumentException e) {
+			System.out.println("Error :" +e.getMessage());
+		}finally {
+			System.out.println("Deposit operation completed");
+		}
+	}
+	
+	
+	
+	public static void withdraw(Scanner sc) {
+		try {
+			System.out.println("Ennter withdrawal amount :");
+			double amount = Double.parseDouble(sc.nextLine());
+			if(amount<=0) {
+				throw new IllegalArgumentException("withdrawal amount should be positive");
+			}
+			if (amount >balance) {
+				throw new ArithmeticException("Insuffecient balance");
+			}
+			balance = balance + amount;
+			System.out.println("Withdrawal successful !");
+			System.out.println("Withdrawal amount :" +amount);
+			System.out.println("remaining balance :" + balance);
+		} catch(NumberFormatException e) {
+			System.out.println("Error : enter correct numeric amount");
+		} catch(IllegalArgumentException e) {
+			System.out.println("Error :" +e.getMessage());
+			
+		}catch(ArithmeticException e) {
+			System.out.println("Error :" +e.getMessage());
+		}
+		finally {
+			System.out.println("withdrawal operation completed");
+		}
+	}
+	
+	
+	
+	public static void checkBalance(Scanner sc) {
+		try {
+			System.out.println("Account holder :"+accountHolder);
+			System.out.println("Avalilabel balance:" +balance);
+		} catch(Exception e) {
+			System.out.println("Unable to check balance");
+		}finally {
+			System.out.println("Balance check completed");
+		}
+	}
+	
+	
+	
+	
+	public static void divideAmount(Scanner sc) {
+		try {
+			System.out.println("Enter amount :");
+			double amount = Double.parseDouble(sc.nextLine());
+			System.out.println("Enter devisor :");
+			int divisor = Integer.parseInt(sc.nextLine());
+			if(divisor == 0) {
+				throw new ArithmeticException("Division by 0 is not allowed");
+			}
+			double result = amount / divisor ;
+			System.out.println("Result :" +result);
+		} catch(NumberFormatException e) {
+			System.out.println("Error : Please enter valid numeric values.");
+		} catch(ArithmeticException e) {
+			System.out.println("Error :"+e.getMessage());
+		} finally {
+			System.out.println("Division operation completed.");
+		}
+	}
+
+	public static void main(String args[]) {
+		System.out.println("=====================");
+		System.out.println("   BANK MANAGEMENT SYSTEM   ");
+		System.out.println("======================");
+		Scanner sc = new Scanner(System.in);
+		
+		try {
+			System.out.println("Account Holder :" +accountHolder);
+			System.out.println("Opening balance" +balance);
+			boolean running = true;
+			while(running) {
+				System.out.println("\n1. Deposit Money ");
+				System.out.println("2. Withdraw money ");
+				System.out.println("3.Check Balance ");
+				System.out.println("4.Divide amount");
+				System.out.println("5. Exit");
+				
+				System.out.println("Enter your choice");
+			}
+			
+			try {
+				//Unboxing
+				int choice = Integer.parseInt(sc.nextLine());
+				switch(choice) {
+					case 1 : deposit(sc);
+					break;
+					case 2 : withdraw(sc);
+					break;
+					case 3 : checkBalance(sc);
+					break;
+					case 4 : divideAmount(sc);
+					break;
+					case 5 : running = false;
+					System.out.println("Thank you");
+					break;
+					
+					default : System.out.println("Invalid choice");
+				}
+			}
+			catch(NumberFormatException e) {
+				System.out.println("Error : Please enter a valid number");
+			}
+			finally {
+				sc.close();
+				System.out.println("Application closed...");
+			}
+		}
+		
+		catch(Exception e) {
+			System.out.println("Unexpected error :" + e.getMessage());
+		}finally {
+			sc.close();
+			System.out.println("Application closed....");
+		}
+	}
+}
+
+
